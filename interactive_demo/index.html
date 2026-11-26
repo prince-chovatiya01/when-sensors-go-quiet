@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Sensors Go Quiet | IEEE SENSORS@25 Interactive Demonstration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="milestone-badge">IEEE SENSORS@25</div>
+        <div class="brand-title">
+          <h1>When Sensors Go Quiet</h1>
+          <p>Interactive Reliability & Fallback Explorer • Cairo, Egypt • Dec 14–16, 2026</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge live-badge"><span class="pulse-dot"></span> Live Verified Data</span>
+        <span class="badge dataset-badge">UCI HAR (10,299 Windows)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Container -->
+  <main class="dashboard-grid">
+
+    <!-- Left Control Panel -->
+    <aside class="control-panel card">
+      <div class="panel-header">
+        <h2>Sensor Control Unit</h2>
+        <p class="subtitle">Simulate real-time channel dropouts, noise, and fallback routing</p>
+      </div>
+
+      <!-- Control 1: Operating Sensor Configuration -->
+      <div class="control-group">
+        <label class="control-label">1. Sensor Modality Configuration</label>
+        <div class="pill-selector" id="modalitySelector">
+          <button class="pill-btn active" data-modality="multimodal">Multimodal (Acc+Gyro)</button>
+          <button class="pill-btn" data-modality="acc_only">Acc-Only Baseline</button>
+          <button class="pill-btn" data-modality="gyro_only">Gyro-Only Baseline</button>
+          <button class="pill-btn alert-pill" data-modality="silent_gyro">Silent Gyroscope (0-Fill)</button>
+          <button class="pill-btn success-pill" data-modality="adaptive_fallback">Adaptive Acc Fallback</button>
+          <button class="pill-btn danger-pill" data-modality="silent_acc">Silent Accelerometer</button>
+        </div>
+      </div>
+
+      <!-- Control 2: Classifier Architecture -->
+      <div class="control-group">
+        <label class="control-label">2. Evaluated Classifier Model</label>
+        <div class="segmented-control" id="modelSelector">
+          <button class="seg-btn active" data-model="rf">Random Forest</button>
+          <button class="seg-btn" data-model="lr">Logistic Regression</button>
+          <button class="seg-btn" data-model="svm">Linear SVM</button>
+        </div>
+      </div>
+
+      <!-- Control 3: Additive Gaussian Noise Sweeper -->
+      <div class="control-group">
+        <div class="label-with-value">
+          <label class="control-label">3. Additive Gaussian Noise ($\sigma$)</label>
+          <span class="slider-val" id="noiseValueDisplay">σ = 0.00 (Clean)</span>
+        </div>
+        <input type="range" id="noiseSlider" min="0" max="8" step="1" value="0" class="custom-slider">
+        <div class="slider-ticks">
+          <span>0.0</span>
+          <span>0.05</span>
+          <span>0.10</span>
+          <span>0.25</span>
+          <span>0.50</span>
+          <span>0.75</span>
+          <span>1.0</span>
+          <span>1.5</span>
+          <span>2.0</span>
+        </div>
+      </div>
+
+      <!-- Control 4: Single-Axis Fault Simulator -->
+      <div class="control-group">
+        <label class="control-label">4. Single-Axis Fault Simulator (Flatline/Dropout)</label>
+        <select id="axisSelector" class="custom-select">
+          <option value="none">None (All 9 Physical Axes Active)</option>
+          <option value="total_acc_x">Total Acc X-Axis (Primary Fatal Point: -0.830 F1)</option>
+          <option value="total_acc_y">Total Acc Y-Axis (-0.141 F1)</option>
+          <option value="body_acc_x">Body Acc X-Axis (-0.086 F1)</option>
+          <option value="body_gyro_x">Body Gyro X-Axis (-0.149 F1)</option>
+          <option value="body_gyro_y">Body Gyro Y-Axis (-0.021 F1)</option>
+          <option value="body_gyro_z">Body Gyro Z-Axis (-0.019 F1)</option>
+        </select>
+      </div>
+
+      <!-- Fallback Benefit Callout -->
+      <div class="fallback-callout" id="fallbackCallout">
+        <div class="callout-icon">💡</div>
+        <div class="callout-text">
+          <strong>Adaptive Fallback Advantage</strong>
+          <p id="fallbackComparisonText">Switching to the dedicated Accelerometer fallback model recovers +3.53% Macro-F1 over naive zero-imputed joint models.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Presentation Display -->
+    <section class="display-panel">
+
+      <!-- Metrics Summary Row -->
+      <div class="metrics-row">
+        <div class="metric-card card">
+          <span class="m-label">Classification Macro-F1</span>
+          <div class="m-value-wrap">
+            <span class="m-val" id="macroF1Display">0.8816</span>
+            <span class="m-status-pill badge-optimal" id="statusPill">Optimal (100%)</span>
+          </div>
+          <span class="m-sub" id="retentionDisplay">Baseline Reference (Pristine 9-Ch)</span>
+        </div>
+
+        <div class="metric-card card">
+          <span class="m-label">Balanced Accuracy</span>
+          <div class="m-value-wrap">
+            <span class="m-val" id="balAccDisplay">88.04%</span>
+          </div>
+          <span class="m-sub">Across 6 ADL Classes (Zero Leakage)</span>
+        </div>
+
+        <div class="metric-card card">
+          <span class="m-label">Active Sensor Power Estimate</span>
+          <div class="m-value-wrap">
+            <span class="m-val highlight-val" id="powerDisplay">4.10 mA</span>
+          </div>
+          <span class="m-sub" id="powerSavingsDisplay">Full Power Draw (Acc + Gyro active)</span>
+        </div>
+      </div>
+
+      <!-- Mid Row: Robustness Curve & Per-Activity Vulnerability -->
+      <div class="two-col-charts">
+        
+        <!-- Chart 1: Noise Degradation Curve -->
+        <div class="chart-card card">
+          <div class="chart-header">
+            <h3>Noise Robustness Degradation Curve</h3>
+            <span class="chart-sub">Macro-F1 vs. Gaussian Noise Severity ($\sigma$)</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="noiseCurveCanvas"></canvas>
+          </div>
+          <div class="legend-row">
+            <span class="legend-item"><span class="dot dot-red"></span> All Channels</span>
+            <span class="legend-item"><span class="dot dot-blue"></span> Gyro Only Corrupted</span>
+            <span class="legend-item"><span class="dot dot-green"></span> Acc Only Corrupted</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Per-Activity F1 Scores -->
+        <div class="chart-card card">
+          <div class="chart-header">
+            <h3>Per-Activity Classification Resolution</h3>
+            <span class="chart-sub">F1-Score across 6 Human Activities of Daily Living</span>
+          </div>
+          <div class="activity-bars-container" id="activityBars">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: Dynamic Confusion Matrix -->
+      <div class="cm-card card">
+        <div class="cm-header">
+          <div>
+            <h3>Dynamic Confusion Matrix Dynamics</h3>
+            <span class="chart-sub">Observe misclassification shifts between dynamic walking vs. static postures</span>
+          </div>
+          <div class="cm-meta-tag" id="cmMetaTag">State: Clean Multimodal (9-Channel)</div>
+        </div>
+
+        <div class="cm-wrapper">
+          <div class="cm-grid" id="cmGrid">
+            <!-- Dynamically populated 6x6 grid -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>IEEE SENSORS@25 Interactive Research Contribution • Autonomous Research Deliverable • Prince Chovatiya</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Presentation Submission | IEEE SENSORS@25</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-dark: #1e3a8a;
+            --primary-light: #eff6ff;
+            --primary-border: #bfdbfe;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --border-focus: #3b82f6;
+            --bg-page: #f8fafc;
+            --card-bg: #ffffff;
+            --danger: #ef4444;
+            --success: #10b981;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-card: 0 20px 50px -12px rgba(15, 23, 42, 0.09), 0 0 0 1px rgba(226, 232, 240, 0.8);
+            --shadow-hover: 0 20px 35px -8px rgba(37, 99, 235, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 15% 15%, #edf4ff 0%, #f8fafc 50%, #f1f5f9 100%);
+            font-family: "Plus Jakarta Sans", "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 15px;
+            line-height: 1.5;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+        .submission-card {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: 45px 52px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* ================= HEADER ================= */
+        .form-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .conference-logo-wrapper {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 6px;
+        }
+
+        .conference-logo {
+            max-height: 90px;
+            max-width: 260px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
+            transition: transform 0.25s ease;
+        }
+
+        .conference-logo:hover {
+            transform: scale(1.02);
+        }
+
+        .page-title {
+            text-align: center;
+            font-weight: 700;
+            color: #1e3a8a;
+            font-size: 26px;
+            letter-spacing: -0.4px;
+            margin-bottom: 6px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14.5px;
+            font-weight: 500;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .page-subtitle span.dot-sep {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #94a3b8;
+            border-radius: 50%;
+        }
+
+        .anniversary-tagline {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: -6px;
+            margin-bottom: 22px;
+            line-height: 1.5;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* SIGNED IN BADGE */
+        .signed-user-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+            color: #1e40af;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .signed-user-badge i {
+            font-size: 16px;
+            color: #2563eb;
+        }
+
+        .signed-user-badge strong {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        /* ================= FLOATING INPUT SYSTEM ================= */
+        .floating-group {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .floating-input {
+            width: 100%;
+            height: 52px;
+            padding: 14px 14px 4px 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .floating-input:hover:not(:disabled):not([readonly]) {
+            border-color: #94a3b8;
+        }
+
+        .floating-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #ffffff;
+        }
+
+        .floating-input[readonly] {
+            background-color: #f8fafc;
+            color: #475569;
+            cursor: default;
+            border-color: #e2e8f0;
+        }
+
+        .floating-input.is-invalid {
+            border-color: var(--danger) !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+        }
+
+        /* TEXTAREA FLOATING */
+        textarea.floating-input {
+            height: auto;
+            min-height: 110px;
+            padding-top: 20px;
+            resize: vertical;
+        }
+
+        /* FLOATING LABEL */
+        .floating-group label {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            font-size: 15px;
+            font-weight: 400;
+            color: #64748b;
+            background: transparent;
+            padding: 0 4px;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        textarea.floating-input + label {
+            top: 26px;
+        }
+
+        /* ACTIVE / FLOATED STATE */
+        .floating-input:focus + label,
+        .floating-input:not(:placeholder-shown) + label,
+        .floating-group.has-value label {
+            top: -9px;
+            left: 10px;
+            transform: translateY(0);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            background: #ffffff;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+
+        .floating-input[readonly] + label {
+            color: #64748b;
+        }
+
+        .floating-input[readonly]:not(:placeholder-shown) + label {
+            color: #475569;
+        }
+
+        /* ASTERISK STYLING */
+        .required-sign {
+            color: var(--danger);
+            font-weight: 700;
+            margin-left: 2px;
+            display: none;
+        }
+
+        .floating-input:focus + label .required-sign,
+        .floating-input:not(:placeholder-shown) + label .required-sign,
+        .floating-group.has-value label .required-sign,
+        .custom-select-group.is-open label .required-sign,
+        .custom-select-group.has-value label .required-sign {
+            display: inline;
+        }
+
+        /* FIELD ERROR MESSAGE */
+        .field-error {
+            position: absolute;
+            bottom: -20px;
+            left: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--danger);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .field-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            padding-left: 4px;
+        }
+
+        /* ================= CO-AUTHORS SECTION ================= */
+        .coauthors-section-wrapper {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 20px 20px 14px;
+            margin-bottom: 28px;
+        }
+
+        .section-mini-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-mini-title {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #1e3a8a;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-mini-title span.opt-tag {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .coauthor-card-row {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 16px 16px 4px;
+            margin-bottom: 14px;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+        }
+
+        .coauthor-card-row:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-add-coauthor {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            color: var(--primary);
+            border: 1.5px solid var(--primary-border);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-add-coauthor:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-remove-coauthor {
+            color: var(--danger);
+            background: transparent;
+            border: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-remove-coauthor:hover {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        /* ================= CUSTOM SELECT (TRACK) ================= */
+        .custom-select-group {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .custom-select-box {
+            width: 100%;
+            min-height: 52px;
+            padding: 14px 38px 4px 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .custom-select-box::after {
+            content: "\F282";
+            font-family: "bootstrap-icons";
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #64748b;
+            pointer-events: none;
+            transition: transform 0.2s ease;
+        }
+
+        .custom-select-group.is-open .custom-select-box::after {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--primary);
+        }
+
+        .custom-select-group.is-open .custom-select-box,
+        .custom-select-box:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .custom-select-group.readonly .custom-select-box {
+            background-color: #f8fafc;
+            cursor: default;
+            pointer-events: none;
+            border-color: #e2e8f0;
+        }
+
+        .custom-select-group label {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            font-size: 15px;
+            font-weight: 400;
+            color: #64748b;
+            background: transparent;
+            padding: 0 4px;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .custom-select-group.is-open label,
+        .custom-select-group.has-value label {
+            top: -9px;
+            left: 10px;
+            transform: translateY(0);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            background: #ffffff;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+
+        .custom-options-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            max-height: 240px;
+            overflow-y: auto;
+            z-index: 1050;
+            padding: 6px;
+        }
+
+        .custom-select-group.is-open .custom-options-menu {
+            display: block;
+            animation: dropdownFadeIn 0.2s ease-out;
+        }
+
+        @keyframes dropdownFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .custom-options-menu .option-item {
+            padding: 10px 14px;
+            font-size: 14.5px;
+            color: #334155;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .custom-options-menu .option-item:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        .custom-options-menu .option-item.selected {
+            background: #e0e7ff;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* ================= INTERACTIVE PRESENTATION FILE UPLOAD ZONE ================= */
+        .upload-section-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+            margin-bottom: 24px;
+            transition: all 0.25s ease;
+        }
+
+        .upload-header-label {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-header-label .required-sign {
+            color: var(--danger);
+        }
+
+        .presentation-file-drop {
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius-sm);
+            padding: 30px 20px;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .presentation-file-drop:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .presentation-drop-icon {
+            font-size: 40px;
+            color: #93c5fd;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .presentation-drop-text {
+            font-size: 13.5px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .btn-browse-presentation {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #ffffff;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 8px 22px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-browse-presentation:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .presentation-file-types {
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        .presentation-selected-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 14px;
+            font-size: 13.5px;
+            color: #1e3a8a;
+            font-weight: 500;
+            word-break: break-all;
+            text-align: left;
+        }
+
+        .presentation-selected-file span {
+            flex: 1;
+        }
+
+        .btn-remove-presentation {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .btn-remove-presentation:hover {
+            color: #b91c1c;
+            transform: scale(1.15);
+        }
+
+        .upload-specs-badge {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .badge-aspect {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 20px;
+            padding: 1px 9px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .video-preview-wrapper {
+            margin-top: 16px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #000;
+            text-align: center;
+        }
+
+        .video-preview-player {
+            max-width: 100%;
+            max-height: 320px;
+            border-radius: var(--radius-sm);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* ================= ABSTRACT FILE UPLOAD ================= */
+        .abstract-upload-card {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+            margin-bottom: 4px;
+            transition: all 0.25s ease;
+        }
+
+        .abstract-upload-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .abstract-upload-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .abstract-upload-title .required-sign {
+            color: var(--danger);
+        }
+
+        .btn-download-template {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+            white-space: nowrap;
+        }
+
+        .btn-download-template:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .abstract-upload-hint {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin: 0 0 14px;
+            line-height: 1.5;
+        }
+
+        .abstract-file-drop {
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius-sm);
+            padding: 28px 20px;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .abstract-file-drop:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .abstract-drop-icon {
+            font-size: 38px;
+            color: #93c5fd;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .abstract-drop-text {
+            font-size: 13.5px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .btn-browse-abstract {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #ffffff;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-browse-abstract:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .abstract-file-types {
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        .abstract-selected-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 14px;
+            font-size: 13.5px;
+            color: #1e3a8a;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .abstract-selected-file span {
+            flex: 1;
+        }
+
+        .btn-remove-abstract {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            padding: 0;
+            font-size: 17px;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-remove-abstract:hover {
+            transform: scale(1.15);
+        }
+
+        .abstract-existing-file-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-top: 6px;
+        }
+
+        .abstract-existing-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .abstract-file-meta {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .abstract-file-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            word-break: break-all;
+        }
+
+        .abstract-file-label {
+            font-size: 14px;
+            color: #15803d;
+            font-weight: 500;
+        }
+
+        .btn-download-uploaded-file {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+            white-space: nowrap;
+        }
+
+        .btn-download-uploaded-file:hover {
+            background: linear-gradient(135deg, #15803d, #166534);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .abstract-no-file-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-size: 13.5px;
+            margin-top: 6px;
+        }
+
+        .abstract-existing-text-box {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            margin-top: 6px;
+        }
+
+        .abstract-text-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .abstract-text-content {
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        /* POSTER PREVIEW */
+        .poster-preview-container {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .poster-frame {
+            position: relative;
+            display: inline-block;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            background: #0f172a;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 240px;
+        }
+
+        .poster-frame:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.25);
+        }
+
+        .poster-frame img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9/16;
+            object-fit: contain;
+            display: block;
+        }
+
+        .poster-zoom-hint {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 20px 10px 8px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .poster-frame:hover .poster-zoom-hint {
+            opacity: 1;
+        }
+
+        /* ================= PRIMARY SUBMIT BUTTON ================= */
+        .btn-submit-main {
+            width: 100%;
+            padding: 15px 24px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.4);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-submit-main:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.55);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .btn-submit-main:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 15px -2px rgba(37, 99, 235, 0.4);
+        }
+
+        /* ================= AUTH CARD (SIGN-IN & OTP) ================= */
+        .auth-wrapper-box {
+            padding: 10px 0 20px;
+        }
+
+        .auth-card-inner {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            box-shadow: 0 18px 45px -8px rgba(15, 23, 42, 0.08);
+        }
+
+        .auth-icon-circle {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            color: #1e40af;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .auth-heading {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .auth-desc {
+            font-size: 13.5px;
+            color: #64748b;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .btn-google-auth {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 13px 20px;
+            background: #ffffff;
+            color: #334155;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-google-auth:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f172a;
+            box-shadow: 0 6px 18px rgba(66, 133, 244, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .auth-or-separator {
+            position: relative;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .auth-or-separator::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .auth-or-separator span {
+            position: relative;
+            background: #ffffff;
+            padding: 0 16px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .otp-email-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 10px 16px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.05);
+        }
+
+        .otp-email-badge-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+            color: #334155;
+            text-align: left;
+        }
+
+        .otp-email-badge-info i {
+            font-size: 17px;
+            color: #2563eb;
+            flex-shrink: 0;
+        }
+
+        .otp-email-badge-info span {
+            color: #64748b;
+        }
+
+        .otp-email-badge-info strong {
+            color: #0f172a;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .btn-otp-change-email {
+            background: #ffffff;
+            border: 1px solid #bfdbfe;
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 12.5px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-otp-change-email:hover {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .otp-input-tile {
+            width: 46px;
+            height: 52px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e3a8a;
+            border: 1.8px solid #cbd5e1;
+            border-radius: 12px;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .otp-input-tile:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
+            transform: scale(1.03);
+        }
+
+        .otp-input-tile.is-invalid {
+            border-color: var(--danger);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+
+        /* ================= FOOTER ================= */
+        .form-footer-wrapper {
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 1px dashed #cbd5e1;
+            text-align: center;
+        }
+
+        .footer-council-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+
+        .footer-council-logo {
+            max-height: 44px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+        }
+
+        /* ================= MODALS ================= */
+        .confirm-dialog-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .upload-progress-icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .upload-progress-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px 20px;
+        }
+
+        .upload-progress-track {
+            height: 12px;
+            border-radius: 10px;
+            background-color: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .upload-progress-track .progress-bar {
+            border-radius: 10px;
+            transition: width 0.2s ease-out;
+        }
+
+        .modal-poster-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+    
+        
+        /* ================= Multi Select Dropdown ================= */
+        .multi-search-wrap {
+            position: sticky;
+            top: -6px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 6px 8px;
+            margin: -6px -6px 4px;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .multi-search-wrap .form-control {
+            font-size: 14px;
+            border-radius: 8px;
+        }
+        
+        .multi-search-wrap .btn-link {
+            font-size: 12.5px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .multi-select-menu {
+            max-height: 320px;
+        }
+        
+        .multi-select-menu {
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            margin-top: 4px !important;
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+        }
+        
+        .multi-select-menu .form-check {
+            margin: 0;
+            padding: 9px 12px 9px 2.2rem;
+            border-radius: var(--radius-sm);
+            transition: background 0.15s ease;
+        }
+        
+        .multi-select-menu .form-check:hover {
+            background: var(--primary-light);
+        }
+        
+        .multi-select-menu .form-check-label {
+            display: block;
+            width: 100%;
+            font-size: 14.5px;
+            color: #334155;
+            cursor: pointer;
+        }
+        
+        .multi-select-menu .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .multi-display-text {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* keep the arrow rotation + label float when the dropdown is open */
+        .custom-select-group.dropdown.show .custom-select-box {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .custom-select-group.dropdown.show .custom-select-box::after {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--primary);
+        }
+        .custom-select-group.dropdown.show label {
+            top: -9px;
+            left: 10px;
+            transform: translateY(0);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            background: #fff;
+            padding: 0 6px;
+            border-radius: 4px;
+        }
+        
+        .custom-select-group.dropdown .multi-select-menu label.form-check-label {
+            position: static;
+            top: auto;
+            left: auto;
+            transform: none;
+            z-index: auto;
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            border-radius: 0;
+            font-size: 14.5px;
+            font-weight: 400;
+            color: #334155;
+            white-space: normal;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        .multi-select-menu {
+            overflow-x: hidden;
+        }
+        /* ================= Multi Select Dropdown ================= */
+        
+        /* ================= ANIMATIONS ================= */
+        .fade-in-up {
+            animation: fadeInUp 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= RESPONSIVE MEDIA QUERIES ================= */
+        @media (max-width: 991px) {
+            .submission-card {
+                padding: 36px 30px;
+                border-radius: 18px;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                padding: 16px 8px;
+            }
+
+            .submission-card {
+                padding: 24px 16px;
+                border-radius: 16px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .page-subtitle {
+                font-size: 13px;
+            }
+
+            .signed-user-badge {
+                font-size: 13px;
+                padding: 6px 14px;
+            }
+
+            .floating-group {
+                margin-bottom: 24px;
+            }
+
+            .floating-input {
+                font-size: 16px; /* Prevents auto-zoom in iOS Safari */
+                height: 50px;
+            }
+
+            .floating-group label,
+            .custom-select-group label {
+                font-size: 14px;
+            }
+
+            .floating-input:focus + label,
+            .floating-input:not(:placeholder-shown) + label,
+            .floating-group.has-value label,
+            .custom-select-group.is-open label,
+            .custom-select-group.has-value label {
+                font-size: 11.5px;
+                top: -8px;
+            }
+
+            .coauthors-section-wrapper {
+                padding: 14px 12px;
+            }
+
+            .coauthor-card-row {
+                padding: 14px 12px 2px;
+            }
+
+            .upload-section-card {
+                padding: 16px 14px;
+            }
+
+            .btn-browse-file {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .otp-input-tile {
+                width: 38px;
+                height: 48px;
+                font-size: 18px;
+                border-radius: 10px;
+            }
+
+            .btn-submit-main {
+                font-size: 16px;
+                padding: 13px 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .otp-input-tile {
+                width: 34px;
+                height: 44px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="submission-card">
+
+        <!-- Header -->
+        <div class="form-header">
+                        <div class="conference-logo-wrapper">
+                <img src="https://myeposter.com/storage/conference_logos/HvZFDSjUox456Uv6JcSTxpMYuogr8PIDsmLj4GM8.png" 
+                     alt="IEEE SENSORS@25 Logo" 
+                     class="conference-logo">
+            </div>
+            
+            <h1 class="page-title">Interactive Presentation Submission for IEEE SENSORS@25</h1>
+            <div class="page-subtitle">
+                <span>25th Anniversary Milestone Event</span>
+                                <span class="dot-sep"></span>
+                <span>Cairo, Egypt</span>
+                            </div>
+            <p class="anniversary-tagline">Celebrating the 25th anniversary of the IEEE Sensors Conference and the IEEE Sensors Council's conference activities.</p>
+
+            <!-- Signed-in Status Badge -->
+                    </div>
+
+        <!-- System Alerts -->
+        
+        
+        <!-- ================= MAIN SUBMISSION FORM (LOGGED IN) ================= -->
+                <!-- ================= AUTH SECTION (NOT LOGGED IN) ================= -->
+        <div class="auth-wrapper-box my-3">
+            <div class="auth-card-inner">
+                <div class="text-center">
+                    <div class="auth-icon-circle">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+                    <h3 class="auth-heading">Sign in to Submit Your Interactive Presentation</h3>
+                    <p class="auth-desc">Choose your preferred sign-in method to access the submission portal</p>
+                </div>
+
+                <!-- Google Sign-in Button -->
+                <div class="mb-3">
+                    <a href="https://myeposter.com/auth/google?redirect_to=https%3A%2F%2Fmyeposter.com%2Ffzez5pjren%2Fpresentation-submission" class="btn-google-auth">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        <span>Sign in with Google</span>
+                    </a>
+                </div>
+
+                <!-- Modern Separator -->
+                <div class="auth-or-separator">
+                    <span>OR OTHER LOGIN</span>
+                </div>
+
+                <!-- Email OTP Flow -->
+                <div id="emailOtpFlow">
+                    <!-- Step 1: Request Email -->
+                    <div id="emailStep">
+                        <div class="floating-group mb-3">
+                            <input type="email" id="loginEmailInput" class="floating-input" placeholder=" " autocomplete="email">
+                            <label for="loginEmailInput"><i class="bi bi-envelope me-1"></i> Enter Your Email Address <span class="required-sign">*</span></label>
+                            <span id="emailError" class="field-error d-none"></span>
+                        </div>
+
+                        <button type="button" class="btn-submit-main py-2.5" id="btnSendOtp" onclick="sendOtpCode()">
+                            <span class="btn-text"><i class="bi bi-send-fill me-1"></i> Send Verification Code</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Verify 6-digit OTP -->
+                    <div id="otpStep" class="d-none fade-in-up">
+                        <div class="otp-email-badge">
+                            <div class="otp-email-badge-info">
+                                <i class="bi bi-envelope-check-fill"></i>
+                                <div>
+                                    <span>Sent to </span><strong id="sentEmailDisplay"></strong>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-otp-change-email" onclick="backToEmailStep()">
+                                Change
+                            </button>
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <label class="form-label text-muted small fw-semibold mb-2">Enter 6-digit verification code</label>
+                            <div class="d-flex justify-content-center gap-2" id="otpBoxes">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="0" inputmode="numeric" autocomplete="one-time-code">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="1" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="2" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="3" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="4" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-tile" data-index="5" inputmode="numeric">
+                            </div>
+                            <span id="otpError" class="field-error position-static d-none text-center justify-content-center mt-2"></span>
+                        </div>
+
+                        <button type="button" class="btn-submit-main py-2.5 mb-3" id="btnVerifyOtp" onclick="verifyOtpCode()">
+                            <span class="btn-text"><i class="bi bi-shield-check me-1"></i> Verify</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="d-flex justify-content-between align-items-center small text-muted">
+                            <button type="button" class="btn btn-sm btn-link text-decoration-none p-0 text-muted" onclick="backToEmailStep()">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <div>
+                                <span id="resendCountdown" class="text-muted">Resend in <strong id="timerVal">30</strong>s</span>
+                                <button type="button" id="btnResendOtp" class="btn btn-sm btn-link text-decoration-none p-0 d-none text-primary fw-semibold" onclick="resendOtpCode()">
+                                    <i class="bi bi-arrow-repeat me-1"></i> Resend Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alert message container -->
+                    <div id="authAlert" class="alert mt-3 d-none py-2 px-3 small rounded-3" role="alert"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="form-footer-wrapper">
+            <p class="footer-council-text">This Digital Presentation platform is part of a landmark milestone event of the IEEE Sensors Council</p>
+            <div>
+                <img src="https://myeposter.com/assets/img/ieee-sensors-council.png" 
+                     alt="IEEE Sensors Council Logo" 
+                     class="footer-council-logo">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Image Zoom Modal -->
+    <div class="modal fade" id="imageZoomModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center p-0 position-relative">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img id="zoomedImage" class="modal-poster-img" alt="Zoomed Interactive Presentation">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal Before Final Submission -->
+    <div class="modal fade" id="submitConfirmModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content confirm-dialog-content">
+                <div class="modal-body p-4 text-center position-relative">
+                    <!-- INITIAL CONFIRMATION VIEW -->
+                    <div id="submitModalConfirmView">
+                        <div class="auth-icon-circle mx-auto mb-3">
+                            <i class="bi bi-question-circle-fill text-primary"></i>
+                        </div>
+
+                        <h4 class="fw-bold text-dark mb-2">Review Before Final Submission</h4>
+                        <p class="text-muted small mb-3">
+                            Please review all fields carefully before submitting your Interactive Presentation.
+                        </p>
+
+                        <div class="alert alert-warning text-start small mb-4 rounded-3 border-0 bg-warning-subtle">
+                            <strong class="d-block mb-1"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Important Notice:</strong>
+                            After uploading your presentation file, make sure to click on the thumbnail preview to verify that the quality and text remain sharp and legible.
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="button" class="btn btn-light px-4 py-2 fw-semibold rounded-3 border" data-bs-dismiss="modal" id="submitCancelBtn">
+                                Cancel
+                            </button>
+                            <button type="button" class="btn btn-primary px-4 py-2 fw-semibold rounded-3" id="confirmSubmitBtn" onclick="submitFormNow()">
+                                <i class="bi bi-check2-circle me-1"></i> Confirm & Submit
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PROGRESS VIEW DURING SUBMISSION -->
+                    <div id="submitModalProgressView" class="d-none py-2">
+                        <div class="upload-progress-icon-circle" id="progressIconCircle">
+                            <i class="bi bi-cloud-arrow-up-fill" id="progressStatusIcon"></i>
+                        </div>
+
+                        <h4 class="fw-bold text-dark mb-2" id="progressTitle">Uploading Presentation...</h4>
+                        <p class="text-muted small mb-4" id="progressSubtitle">
+                            Please wait while your files are being uploaded. Do not refresh or close this page.
+                        </p>
+
+                        <div class="upload-progress-box mb-3 text-start">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold small text-secondary" id="progressStatusText">
+                                    <i class="bi bi-arrow-up-circle me-1 text-primary"></i> Uploading presentation...
+                                </span>
+                                <span class="fw-bold text-primary" id="progressPercentageText">0%</span>
+                            </div>
+
+                            <div class="progress upload-progress-track">
+                                <div id="submitProgressBar" 
+                                     class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                                     role="progressbar" 
+                                     style="width: 0%;" 
+                                     aria-valuenow="0" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2 text-muted" style="font-size: 0.8rem;">
+                                <span id="progressLoadedText">0 MB / 0 MB</span>
+                                <span id="progressSpeedText"></span>
+                            </div>
+                        </div>
+
+                        <!-- Alert box for errors -->
+                        <div id="uploadErrorAlert" class="alert alert-danger text-start small mb-3 rounded-3 d-none">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="bi bi-exclamation-triangle-fill text-danger flex-shrink-0 mt-1"></i>
+                                <div id="uploadErrorMessage">Something went wrong during upload.</div>
+                            </div>
+                        </div>
+
+                        <!-- Retry / Close buttons on error -->
+                        <div id="uploadActionButtons" class="d-none justify-content-center gap-3 mt-3">
+                            <button type="button" class="btn btn-light px-4 py-2 fw-semibold rounded-3 border" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary px-4 py-2 fw-semibold rounded-3" onclick="retrySubmission()">
+                                <i class="bi bi-arrow-repeat me-1"></i> Try Again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Interactive Form Scripts -->
+    <script>
+        // ---------- Paper ID (4 to 5 digits) Client-side Validation ----------
+        function validatePaperId() {
+            const input = document.getElementById('paper_id');
+            const errorEl = document.getElementById('paperIdClientError');
+            if (!input) return true;
+
+            // Existing (readonly) paper IDs are not editable, so skip validation
+            if (input.hasAttribute('readonly')) return true;
+
+            const value = input.value.trim();
+            let message = '';
+
+            if (value === '') {
+                message = 'Paper ID is required.';
+            } else if (!/^\d+$/.test(value)) {
+                message = 'Paper ID must contain digits only.';
+            } else if (!/^\d{4,5}$/.test(value)) {
+                message = 'Paper ID must be 4 to 5 digits only.';
+            }
+
+            if (message) {
+                input.classList.add('is-invalid');
+                if (errorEl) {
+                    errorEl.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> ' + message;
+                    errorEl.classList.remove('d-none');
+                }
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                input.focus();
+                return false;
+            }
+
+            input.classList.remove('is-invalid');
+            if (errorEl) errorEl.classList.add('d-none');
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const paperIdInput = document.getElementById('paper_id');
+            if (!paperIdInput) return;
+
+            // Allow digits only, max 5 characters (also handles paste)
+            paperIdInput.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').slice(0, 5);
+
+                if (this.classList.contains('is-invalid')) {
+                    this.classList.remove('is-invalid');
+                    const errorEl = document.getElementById('paperIdClientError');
+                    if (errorEl) errorEl.classList.add('d-none');
+                }
+            });
+
+            // Block non-numeric keys like e, +, -, . 
+            paperIdInput.addEventListener('keypress', function (e) {
+                if (e.ctrlKey || e.metaKey || e.key.length > 1) return;
+                if (!/\d/.test(e.key)) e.preventDefault();
+            });
+        });
+
+        // ---------- Form Submission Confirmation & Upload Progress ----------
+        let activeUploadXhr = null;
+
+        function confirmSubmission() {
+            const form = document.getElementById('eposterForm');
+
+            // Paper ID: 4 to 5 digits
+            if (!validatePaperId()) {
+                return;
+            }
+
+            if (form && !form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const ieeeHidden = document.getElementById('ieeeMemberHidden');
+            if (ieeeHidden && !ieeeHidden.value.trim()) {
+                const ieeeGroup = document.getElementById('ieeeMemberGroup');
+                if (ieeeGroup) {
+                    ieeeGroup.classList.add('is-open');
+                    ieeeGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                alert('Please select whether you are an IEEE Member.');
+                return;
+            }
+
+            if (ieeeHidden && ieeeHidden.value.trim().toLowerCase() === 'yes') {
+                const memberNum = document.getElementById('ieeeMemberNumber');
+                if (memberNum && !memberNum.value.trim()) {
+                    memberNum.focus();
+                    memberNum.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    alert('Please enter your IEEE Member Number.');
+                    return;
+                }
+
+                const memberTypeHidden = document.getElementById('memberTypeHidden');
+                if (memberTypeHidden && !memberTypeHidden.value.trim()) {
+                    const memberTypeGroup = document.getElementById('memberTypeGroup');
+                    if (memberTypeGroup) {
+                        memberTypeGroup.classList.add('is-open');
+                        memberTypeGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    alert('Please select your Member Type.');
+                    return;
+                }
+            }
+
+            const trackHidden = document.getElementById('trackHidden');
+            if (trackHidden && !trackHidden.value.trim()) {
+                const trackGroup = document.getElementById('trackGroup');
+                if (trackGroup) {
+                    trackGroup.classList.add('is-open');
+                    trackGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                alert('Please select a Track.');
+                return;
+            }
+
+            // Reset modal to confirm view before showing
+            const confirmView = document.getElementById('submitModalConfirmView');
+            const progressView = document.getElementById('submitModalProgressView');
+            if (confirmView && progressView) {
+                confirmView.classList.remove('d-none');
+                progressView.classList.add('d-none');
+            }
+
+            const modalEl = document.getElementById('submitConfirmModal');
+            const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+
+        function submitFormNow() {
+            const form = document.getElementById('eposterForm');
+            if (!form) return;
+
+            const confirmView = document.getElementById('submitModalConfirmView');
+            const progressView = document.getElementById('submitModalProgressView');
+            const progressBar = document.getElementById('submitProgressBar');
+            const percentageText = document.getElementById('progressPercentageText');
+            const statusText = document.getElementById('progressStatusText');
+            const loadedText = document.getElementById('progressLoadedText');
+            const speedText = document.getElementById('progressSpeedText');
+            const progressTitle = document.getElementById('progressTitle');
+            const progressSubtitle = document.getElementById('progressSubtitle');
+            const iconCircle = document.getElementById('progressIconCircle');
+            const statusIcon = document.getElementById('progressStatusIcon');
+            const errorAlert = document.getElementById('uploadErrorAlert');
+            const actionButtons = document.getElementById('uploadActionButtons');
+
+            // Switch to progress view
+            confirmView.classList.add('d-none');
+            progressView.classList.remove('d-none');
+            errorAlert.classList.add('d-none');
+            actionButtons.classList.add('d-none');
+            actionButtons.classList.remove('d-flex');
+
+            // Reset progress bar state
+            progressBar.style.width = '0%';
+            progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-primary';
+            progressBar.setAttribute('aria-valuenow', '0');
+            percentageText.textContent = '0%';
+            statusText.innerHTML = '<i class="bi bi-arrow-up-circle me-1 text-primary"></i> Uploading presentation...';
+            loadedText.textContent = 'Calculating size...';
+            speedText.textContent = '';
+            progressTitle.textContent = 'Uploading Presentation...';
+            progressSubtitle.textContent = 'Please wait while your files are being uploaded. Do not refresh or close this page.';
+            iconCircle.style.background = '#eff6ff';
+            iconCircle.style.color = 'var(--primary)';
+            statusIcon.className = 'bi bi-cloud-arrow-up-fill';
+
+            const formData = new FormData(form);
+            activeUploadXhr = new XMLHttpRequest();
+            const startTime = Date.now();
+
+            activeUploadXhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
+                    progressBar.style.width = percent + '%';
+                    progressBar.setAttribute('aria-valuenow', percent);
+                    percentageText.textContent = percent + '%';
+
+                    const loadedMB = (e.loaded / (1024 * 1024)).toFixed(1);
+                    const totalMB = (e.total / (1024 * 1024)).toFixed(1);
+                    loadedText.textContent = `${loadedMB} MB / ${totalMB} MB`;
+
+                    const elapsedSeconds = (Date.now() - startTime) / 1000;
+                    if (elapsedSeconds > 0.5 && e.loaded > 0) {
+                        const mbPerSec = ((e.loaded / (1024 * 1024)) / elapsedSeconds).toFixed(1);
+                        speedText.textContent = `${mbPerSec} MB/s`;
+                    }
+
+                    if (percent >= 100) {
+                        statusText.innerHTML = '<span class="spinner-border spinner-border-sm text-primary me-1"></span> Processing file on server...';
+                        progressTitle.textContent = 'Processing Presentation...';
+                        progressSubtitle.textContent = 'Upload complete! Saving files and generating QR code. This may take a few moments...';
+                        percentageText.textContent = '100%';
+                    }
+                }
+            });
+
+            activeUploadXhr.onreadystatechange = function() {
+                if (activeUploadXhr.readyState === 4) {
+                    if (activeUploadXhr.status >= 200 && activeUploadXhr.status < 300) {
+                        let response = null;
+                        try {
+                            response = JSON.parse(activeUploadXhr.responseText);
+                        } catch (e) {}
+
+                        // Success state
+                        progressBar.style.width = '100%';
+                        progressBar.className = 'progress-bar bg-success';
+                        percentageText.textContent = '100%';
+                        progressTitle.textContent = 'Submission Successful!';
+                        progressSubtitle.textContent = (response && response.message) ? response.message : 'Your interactive presentation has been uploaded successfully.';
+                        statusText.innerHTML = '<i class="bi bi-check-circle-fill text-success me-1"></i> Completed';
+                        iconCircle.style.background = '#dcfce7';
+                        iconCircle.style.color = '#16a34a';
+                        statusIcon.className = 'bi bi-check-circle-fill';
+
+                        setTimeout(function() {
+                            if (response && response.redirect_url) {
+                                window.location.href = response.redirect_url;
+                            } else {
+                                window.location.reload();
+                            }
+                        }, 1200);
+                        return;
+                    }
+
+                    // Error Handling
+                    progressBar.className = 'progress-bar bg-danger';
+                    percentageText.textContent = 'Error';
+                    progressTitle.textContent = 'Submission Failed';
+                    progressSubtitle.textContent = 'There was an issue processing your submission.';
+                    iconCircle.style.background = '#fee2e2';
+                    iconCircle.style.color = '#dc2626';
+                    statusIcon.className = 'bi bi-x-circle-fill';
+
+                    let errorMsg = 'An unexpected error occurred. Please try again.';
+                    if (activeUploadXhr.status === 422) {
+                        try {
+                            const errData = JSON.parse(activeUploadXhr.responseText);
+                            if (errData.errors) {
+                                const list = [];
+                                for (const key in errData.errors) {
+                                    list.push(...errData.errors[key]);
+                                }
+                                errorMsg = list.join('<br>');
+                            } else if (errData.message) {
+                                errorMsg = errData.message;
+                            }
+                        } catch (err) {}
+                    } else if (activeUploadXhr.status === 413) {
+                        errorMsg = 'File size is too large for the server. Please ensure files do not exceed the 25 MB limit.';
+                    } else if (activeUploadXhr.status === 401) {
+                        errorMsg = 'Your session has expired. Please refresh the page and sign in again.';
+                    } else if (activeUploadXhr.responseText) {
+                        try {
+                            const errData = JSON.parse(activeUploadXhr.responseText);
+                            if (errData.message) errorMsg = errData.message;
+                        } catch (e) {}
+                    }
+
+                    document.getElementById('uploadErrorMessage').innerHTML = errorMsg;
+                    errorAlert.classList.remove('d-none');
+                    actionButtons.classList.remove('d-none');
+                    actionButtons.classList.add('d-flex');
+                }
+            };
+
+            activeUploadXhr.onerror = function() {
+                progressBar.className = 'progress-bar bg-danger';
+                percentageText.textContent = 'Failed';
+                progressTitle.textContent = 'Network Error';
+                progressSubtitle.textContent = 'The connection was interrupted during upload.';
+                iconCircle.style.background = '#fee2e2';
+                iconCircle.style.color = '#dc2626';
+                statusIcon.className = 'bi bi-wifi-off';
+
+                document.getElementById('uploadErrorMessage').innerHTML = 'Network connection lost during file upload. Please check your internet connection and try again.';
+                errorAlert.classList.remove('d-none');
+                actionButtons.classList.remove('d-none');
+                actionButtons.classList.add('d-flex');
+            };
+
+            activeUploadXhr.open('POST', form.action, true);
+            activeUploadXhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            activeUploadXhr.setRequestHeader('Accept', 'application/json');
+            activeUploadXhr.send(formData);
+        }
+
+        function retrySubmission() {
+            const confirmView = document.getElementById('submitModalConfirmView');
+            const progressView = document.getElementById('submitModalProgressView');
+            if (confirmView && progressView) {
+                progressView.classList.add('d-none');
+                confirmView.classList.remove('d-none');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const submitModalElem = document.getElementById('submitConfirmModal');
+            if (submitModalElem) {
+                submitModalElem.addEventListener('hidden.bs.modal', function () {
+                    const confirmView = document.getElementById('submitModalConfirmView');
+                    const progressView = document.getElementById('submitModalProgressView');
+                    if (confirmView && progressView) {
+                        confirmView.classList.remove('d-none');
+                        progressView.classList.add('d-none');
+                    }
+                });
+            }
+        });
+
+        // ---------- Co-Author Rows Management ----------
+        function addCoAuthor() {
+            const container = document.getElementById('coauthor-container');
+            const div = document.createElement('div');
+            div.className = 'coauthor-card-row fade-in-up';
+
+            div.innerHTML = `
+                <div class="row g-2">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="floating-group mb-2">
+                            <input type="text" name="co_author_name[]" class="floating-input" placeholder=" ">
+                            <label>Co Author’s Name</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="floating-group mb-2">
+                            <input type="email" name="co_author_email[]" class="floating-input" placeholder=" ">
+                            <label>Co Author’s Email</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="floating-group mb-2">
+                            <input type="text" name="co_author_affiliation[]" class="floating-input" placeholder=" ">
+                            <label>Affiliation</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end mb-2">
+                    <button type="button" class="btn-remove-coauthor" onclick="removeCoAuthor(this)">
+                        <i class="bi bi-trash3-fill"></i> Remove
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(div);
+        }
+
+        function removeCoAuthor(button) {
+            const row = button.closest('.coauthor-card-row');
+            if (row) {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(-6px)';
+                row.style.transition = 'all 0.2s ease';
+                setTimeout(() => row.remove(), 200);
+            }
+        }
+
+        // ---------- Image Zoom Modal ----------
+        function openImageZoom() {
+            const preview = document.getElementById('eposterPreview');
+            if (preview && preview.src && !preview.closest('.poster-frame').classList.contains('d-none')) {
+                document.getElementById('zoomedImage').src = preview.src;
+                const zoomModal = new bootstrap.Modal(document.getElementById('imageZoomModal'));
+                zoomModal.show();
+            }
+        }
+
+        // ---------- IEEE Member Custom Select Logic (Identical to Track) ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const group = document.getElementById('ieeeMemberGroup');
+            const display = document.getElementById('ieeeMemberDisplay');
+            const options = document.querySelectorAll('#ieeeMemberOptions .option-item');
+            const hidden = document.getElementById('ieeeMemberHidden');
+            const ieeeContainer = document.getElementById('ieeeFieldsContainer');
+
+            if (!group || !display || !hidden) return;
+
+            const isReadonly = group.classList.contains('readonly');
+            const memberValue = hidden.value.trim();
+
+            if (memberValue !== '') {
+                options.forEach(opt => {
+                    if (opt.innerText.trim().toLowerCase() === memberValue.toLowerCase()) {
+                        opt.classList.add('selected');
+                        display.innerText = opt.innerText.trim();
+                        group.classList.add('has-value');
+                    }
+                });
+
+                if (ieeeContainer) {
+                    if (memberValue.toLowerCase() === 'yes') {
+                        ieeeContainer.classList.remove('d-none');
+                    } else {
+                        ieeeContainer.classList.add('d-none');
+                    }
+                }
+            }
+
+            if (isReadonly) return;
+
+            display.addEventListener('click', () => {
+                group.classList.toggle('is-open');
+            });
+
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    options.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+
+                    const text = opt.innerText.trim();
+                    display.innerText = text;
+                    hidden.value = text;
+                    group.classList.add('has-value');
+                    group.classList.remove('is-open');
+
+                    if (ieeeContainer) {
+                        if (text.toLowerCase() === 'yes') {
+                            ieeeContainer.classList.remove('d-none');
+                        } else {
+                            ieeeContainer.classList.add('d-none');
+                        }
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (group && !group.contains(e.target)) {
+                    group.classList.remove('is-open');
+                }
+            });
+        });
+
+        // ---------- Member Type Custom Select Logic ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const group = document.getElementById('memberTypeGroup');
+            const display = document.getElementById('memberTypeDisplay');
+            const options = document.querySelectorAll('#memberTypeOptions .option-item');
+            const hidden = document.getElementById('memberTypeHidden');
+
+            if (!group || !display || !hidden) return;
+
+            const isReadonly = group.classList.contains('readonly');
+            const typeValue = hidden.value.trim();
+
+            if (typeValue !== '') {
+                options.forEach(opt => {
+                    if (opt.innerText.trim().toLowerCase() === typeValue.toLowerCase()) {
+                        opt.classList.add('selected');
+                        display.innerText = opt.innerText.trim();
+                        group.classList.add('has-value');
+                    }
+                });
+            }
+
+            if (isReadonly) return;
+
+            display.addEventListener('click', () => {
+                group.classList.toggle('is-open');
+            });
+
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    options.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+
+                    const text = opt.innerText.trim();
+                    display.innerText = text;
+                    hidden.value = text;
+                    group.classList.add('has-value');
+                    group.classList.remove('is-open');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (group && !group.contains(e.target)) {
+                    group.classList.remove('is-open');
+                }
+            });
+        });
+
+        // ---------- Track Custom Select Logic ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const group = document.getElementById('trackGroup');
+            const display = document.getElementById('trackDisplay');
+            const options = document.querySelectorAll('#trackOptions .option-item');
+            const hidden = document.getElementById('trackHidden');
+            const otherGroup = document.getElementById('otherTrackGroup');
+            const otherInput = document.getElementById('otherTrackInput');
+
+            if (!group || !display || !hidden) return;
+
+            const isReadonly = group.classList.contains('readonly');
+            const trackValue = hidden.value.trim();
+
+            if (trackValue !== '') {
+                let matched = false;
+                options.forEach(opt => {
+                    if (opt.innerText.trim() === trackValue) {
+                        matched = true;
+                        opt.classList.add('selected');
+                    }
+                });
+
+                if (matched) {
+                    display.innerText = trackValue;
+                    group.classList.add('has-value');
+                    if (otherGroup) otherGroup.classList.add('d-none');
+                } else {
+                    display.innerText = 'Other';
+                    group.classList.add('has-value');
+                    if (otherGroup) {
+                        otherGroup.classList.remove('d-none');
+                        if (otherInput) otherInput.value = trackValue;
+                    }
+                }
+            }
+
+            if (isReadonly) return;
+
+            display.addEventListener('click', () => {
+                group.classList.toggle('is-open');
+            });
+
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    options.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+
+                    const text = opt.innerText.trim();
+                    const value = opt.dataset.value || text;
+
+                    display.innerText = text;
+                    group.classList.add('has-value');
+                    group.classList.remove('is-open');
+
+                    if (value === 'other') {
+                        hidden.value = '';
+                        if (otherGroup) {
+                            otherGroup.classList.remove('d-none');
+                            if (otherInput) {
+                                otherInput.value = '';
+                                setTimeout(() => otherInput.focus(), 150);
+                            }
+                        }
+                    } else {
+                        hidden.value = text;
+                        if (otherGroup) {
+                            otherGroup.classList.add('d-none');
+                            if (otherInput) otherInput.value = '';
+                        }
+                    }
+                });
+            });
+
+            if (otherInput) {
+                otherInput.addEventListener('input', function() {
+                    hidden.value = this.value.trim();
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (group && otherGroup && !group.contains(e.target) && !otherGroup.contains(e.target)) {
+                    group.classList.remove('is-open');
+                }
+            });
+        });
+
+        // ================= OTP AUTHENTICATION JAVASCRIPT =================
+        const sendOtpUrl = "https://myeposter.com/eposter/send-otp";
+        const verifyOtpUrl = "https://myeposter.com/eposter/verify-otp";
+        const csrfToken = "67zwJi3wlkUagO2sOw9Of6NIJu4DcKBVONDa46bM";
+        const currentConferenceId = "14";
+
+        let resendTimer = null;
+        let currentEmail = "";
+
+        function showAlert(message, type = 'danger') {
+            const alertBox = document.getElementById('authAlert');
+            if (!alertBox) return;
+            alertBox.className = `alert alert-${type} mt-3 py-2 px-3 small rounded-3`;
+            alertBox.innerHTML = message;
+            alertBox.classList.remove('d-none');
+        }
+
+        function hideAlert() {
+            const alertBox = document.getElementById('authAlert');
+            if (alertBox) alertBox.classList.add('d-none');
+        }
+
+        function setBtnLoading(btnId, isLoading) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+            const textSpan = btn.querySelector('.btn-text');
+            const spinner = btn.querySelector('.spinner-border');
+            btn.disabled = isLoading;
+            if (isLoading) {
+                if (textSpan) textSpan.classList.add('d-none');
+                if (spinner) spinner.classList.remove('d-none');
+            } else {
+                if (textSpan) textSpan.classList.remove('d-none');
+                if (spinner) spinner.classList.add('d-none');
+            }
+        }
+
+        function sendOtpCode() {
+            hideAlert();
+            const emailInput = document.getElementById('loginEmailInput');
+            const emailError = document.getElementById('emailError');
+            if (!emailInput) return;
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                if (emailError) {
+                    emailError.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Please enter your email address.';
+                    emailError.classList.remove('d-none');
+                }
+                emailInput.classList.add('is-invalid');
+                emailInput.focus();
+                return;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                if (emailError) {
+                    emailError.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Please enter a valid email address.';
+                    emailError.classList.remove('d-none');
+                }
+                emailInput.classList.add('is-invalid');
+                emailInput.focus();
+                return;
+            }
+
+            if (emailError) emailError.classList.add('d-none');
+            emailInput.classList.remove('is-invalid');
+            currentEmail = email;
+
+            setBtnLoading('btnSendOtp', true);
+
+            fetch(sendOtpUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    conference_id: currentConferenceId
+                })
+            })
+            .then(async (res) => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || 'Failed to send OTP. Please try again.');
+                }
+                return data;
+            })
+            .then((data) => {
+                setBtnLoading('btnSendOtp', false);
+                document.getElementById('emailStep').classList.add('d-none');
+                document.getElementById('otpStep').classList.remove('d-none');
+                document.getElementById('sentEmailDisplay').innerText = email;
+
+                clearOtpBoxes();
+                startResendCountdown();
+
+                const firstOtpInput = document.querySelector('.otp-input-tile[data-index="0"]');
+                if (firstOtpInput) setTimeout(() => firstOtpInput.focus(), 200);
+            })
+            .catch((err) => {
+                setBtnLoading('btnSendOtp', false);
+                showAlert(err.message || 'Failed to send OTP. Please try again.', 'danger');
+            });
+        }
+
+        function backToEmailStep() {
+            hideAlert();
+            if (resendTimer) clearInterval(resendTimer);
+            document.getElementById('otpStep').classList.add('d-none');
+            document.getElementById('emailStep').classList.remove('d-none');
+            const emailInput = document.getElementById('loginEmailInput');
+            if (emailInput) emailInput.focus();
+        }
+
+        function clearOtpBoxes() {
+            const inputs = document.querySelectorAll('.otp-input-tile');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('is-invalid');
+            });
+            const otpError = document.getElementById('otpError');
+            if (otpError) otpError.classList.add('d-none');
+        }
+
+        function getEnteredOtp() {
+            const inputs = document.querySelectorAll('.otp-input-tile');
+            let otp = '';
+            inputs.forEach(input => {
+                otp += input.value.trim();
+            });
+            return otp;
+        }
+
+        function verifyOtpCode() {
+            hideAlert();
+            const otp = getEnteredOtp();
+            const otpError = document.getElementById('otpError');
+
+            if (otp.length < 6) {
+                if (otpError) {
+                    otpError.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Please enter all 6 digits of the verification code.';
+                    otpError.classList.remove('d-none');
+                }
+                return;
+            }
+
+            if (otpError) otpError.classList.add('d-none');
+            setBtnLoading('btnVerifyOtp', true);
+
+            fetch(verifyOtpUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: currentEmail,
+                    otp: otp
+                })
+            })
+            .then(async (res) => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || 'Invalid verification code.');
+                }
+                return data;
+            })
+            .then((data) => {
+                showAlert('Verification successful! Opening submission form...', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 400);
+            })
+            .catch((err) => {
+                setBtnLoading('btnVerifyOtp', false);
+                if (otpError) {
+                    otpError.innerHTML = `<i class="bi bi-exclamation-circle-fill"></i> ${err.message || 'Invalid or expired OTP.'}`;
+                    otpError.classList.remove('d-none');
+                }
+                const inputs = document.querySelectorAll('.otp-input-tile');
+                inputs.forEach(inp => inp.classList.add('is-invalid'));
+            });
+        }
+
+        function resendOtpCode() {
+            hideAlert();
+            clearOtpBoxes();
+            const btnResend = document.getElementById('btnResendOtp');
+            if (btnResend) btnResend.classList.add('d-none');
+            const countdown = document.getElementById('resendCountdown');
+            if (countdown) countdown.classList.remove('d-none');
+
+            fetch(sendOtpUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: currentEmail,
+                    conference_id: currentConferenceId
+                })
+            })
+            .then(async (res) => {
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Failed to resend OTP.');
+                return data;
+            })
+            .then((data) => {
+                startResendCountdown();
+                const firstOtpInput = document.querySelector('.otp-input-tile[data-index="0"]');
+                if (firstOtpInput) firstOtpInput.focus();
+            })
+            .catch((err) => {
+                showAlert(err.message, 'danger');
+                if (btnResend) btnResend.classList.remove('d-none');
+                if (countdown) countdown.classList.add('d-none');
+            });
+        }
+
+        function startResendCountdown() {
+            if (resendTimer) clearInterval(resendTimer);
+            let secondsLeft = 30;
+            const countdownSpan = document.getElementById('resendCountdown');
+            const timerVal = document.getElementById('timerVal');
+            const btnResend = document.getElementById('btnResendOtp');
+
+            if (!countdownSpan || !timerVal || !btnResend) return;
+
+            countdownSpan.classList.remove('d-none');
+            btnResend.classList.add('d-none');
+            timerVal.innerText = secondsLeft;
+
+            resendTimer = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft <= 0) {
+                    clearInterval(resendTimer);
+                    countdownSpan.classList.add('d-none');
+                    btnResend.classList.remove('d-none');
+                } else {
+                    timerVal.innerText = secondsLeft;
+                }
+            }, 1000);
+        }
+
+        // Setup OTP Box Input Handlers (Auto-focus next, backspace, paste)
+        document.addEventListener('DOMContentLoaded', () => {
+            const emailInput = document.getElementById('loginEmailInput');
+            if (emailInput) {
+                emailInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendOtpCode();
+                    }
+                });
+            }
+
+            const otpInputs = document.querySelectorAll('.otp-input-tile');
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    e.target.value = val ? val[0] : '';
+
+                    if (e.target.value && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+
+                    if (getEnteredOtp().length === 6) {
+                        verifyOtpCode();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        verifyOtpCode();
+                    } else if (e.key === 'ArrowLeft' && index > 0) {
+                        otpInputs[index - 1].focus();
+                    } else if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
+                    const numbers = pasteData.replace(/\D/g, '').slice(0, 6);
+                    if (numbers) {
+                        numbers.split('').forEach((digit, i) => {
+                            if (otpInputs[i]) {
+                                otpInputs[i].value = digit;
+                            }
+                        });
+                        const focusIdx = Math.min(numbers.length, otpInputs.length - 1);
+                        otpInputs[focusIdx].focus();
+
+                        if (numbers.length === 6) {
+                            verifyOtpCode();
+                        }
+                    }
+                });
+            });
+        });
+
+        /* ===== Presentation File Upload Handlers (Image, GIF, Video) ===== */
+        function handlePresentationFileSelect(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const fileNameDisplay = document.getElementById('presentationFileName');
+            const selectedBadge = document.getElementById('presentationSelectedFile');
+            const selectedIcon = document.getElementById('presentationSelectedIcon');
+            const imgWrapper = document.getElementById('posterPreviewWrapper');
+            const imgPreview = document.getElementById('eposterPreview');
+            const videoWrapper = document.getElementById('videoPreviewWrapper');
+            const videoPreview = document.getElementById('videoPreview');
+
+            if (fileNameDisplay) fileNameDisplay.textContent = file.name;
+            if (selectedBadge) selectedBadge.classList.remove('d-none');
+
+            const fileType = (file.type || '').toLowerCase();
+            const fileName = (file.name || '').toLowerCase();
+            const isVideo = fileType.startsWith('video/') || fileName.endsWith('.mp4') || fileName.endsWith('.mov') || fileName.endsWith('.avi') || fileName.endsWith('.webm');
+            const isImage = fileType.startsWith('image/') || fileName.endsWith('.png') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.gif');
+
+            if (isVideo) {
+                if (selectedIcon) selectedIcon.className = 'bi bi-file-earmark-play-fill text-primary fs-4';
+                if (imgWrapper) imgWrapper.classList.add('d-none');
+                if (imgPreview) imgPreview.src = '';
+
+                if (videoWrapper && videoPreview) {
+                    const url = URL.createObjectURL(file);
+                    videoPreview.src = url;
+                    videoWrapper.classList.remove('d-none');
+                }
+            } else if (isImage) {
+                if (selectedIcon) selectedIcon.className = 'bi bi-file-earmark-image-fill text-primary fs-4';
+                if (videoWrapper) videoWrapper.classList.add('d-none');
+                if (videoPreview) { videoPreview.src = ''; }
+
+                if (imgWrapper && imgPreview) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.src = e.target.result;
+                        imgWrapper.classList.remove('d-none');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                if (selectedIcon) selectedIcon.className = 'bi bi-file-earmark-fill text-primary fs-4';
+                if (imgWrapper) imgWrapper.classList.add('d-none');
+                if (videoWrapper) videoWrapper.classList.add('d-none');
+            }
+        }
+
+        function clearPresentationFile() {
+            const input = document.getElementById('eposterInput');
+            if (input) input.value = '';
+
+            const fileNameDisplay = document.getElementById('presentationFileName');
+            if (fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
+
+            const selectedBadge = document.getElementById('presentationSelectedFile');
+            if (selectedBadge) selectedBadge.classList.add('d-none');
+
+            const imgWrapper = document.getElementById('posterPreviewWrapper');
+            const imgPreview = document.getElementById('eposterPreview');
+            if (imgWrapper) imgWrapper.classList.add('d-none');
+            if (imgPreview) imgPreview.src = '';
+
+            const videoWrapper = document.getElementById('videoPreviewWrapper');
+            const videoPreview = document.getElementById('videoPreview');
+            if (videoWrapper) videoWrapper.classList.add('d-none');
+            if (videoPreview) videoPreview.src = '';
+        }
+
+        // Drag & drop for presentation zone
+        document.addEventListener('DOMContentLoaded', () => {
+            const pZone = document.getElementById('presentationDropZone');
+            if (!pZone) return;
+
+            pZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                pZone.style.borderColor = 'var(--primary)';
+                pZone.style.background = 'var(--primary-light)';
+            });
+            pZone.addEventListener('dragleave', () => {
+                pZone.style.borderColor = '#cbd5e1';
+                pZone.style.background = '#f8fafc';
+            });
+            pZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                pZone.style.borderColor = '#cbd5e1';
+                pZone.style.background = '#f8fafc';
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const input = document.getElementById('eposterInput');
+                    const dt = new DataTransfer();
+                    dt.items.add(files[0]);
+                    input.files = dt.files;
+                    handlePresentationFileSelect(input);
+                }
+            });
+        });
+
+        /* ===== Abstract File Upload Handlers ===== */
+        function handleAbstractFileSelect(input) {
+            const file = input.files[0];
+            if (!file) return;
+            document.getElementById('abstractFileName').textContent = file.name;
+            document.getElementById('abstractSelectedFile').classList.remove('d-none');
+        }
+
+        function clearAbstractFile() {
+            const input = document.getElementById('abstractFileInput');
+            if (input) input.value = '';
+            document.getElementById('abstractFileName').textContent = 'No file chosen';
+            document.getElementById('abstractSelectedFile').classList.add('d-none');
+        }
+
+        // Drag & drop for abstract zone
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('abstractDropZone');
+            if (!dropZone) return;
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'var(--primary)';
+                dropZone.style.background = 'var(--primary-light)';
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.style.borderColor = '#cbd5e1';
+                dropZone.style.background = '#f8fafc';
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#cbd5e1';
+                dropZone.style.background = '#f8fafc';
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const input = document.getElementById('abstractFileInput');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(files[0]);
+                    input.files = dataTransfer.files;
+                    handleAbstractFileSelect(input);
+                }
+            });
+        });
+        
+        // ---------- Societies & Councils Multi-select ----------
+        document.addEventListener('DOMContentLoaded', function () {
+            const group = document.getElementById('societiesGroup');
+            if (!group) return;
+        
+            const checks   = group.querySelectorAll('.society-check');
+            const items    = group.querySelectorAll('.society-item');
+            const text     = group.querySelector('.multi-display-text');
+            const search   = document.getElementById('societiesSearch');
+            const clearBtn = document.getElementById('societiesClear');
+            const noResult = document.getElementById('societiesNoResult');
+        
+            function refresh() {
+                const selected = [...checks].filter(c => c.checked).map(c => c.value);
+                text.textContent = selected.length > 2
+                    ? selected.length + ' selected'
+                    : selected.join(', ');
+                group.classList.toggle('has-value', selected.length > 0);
+            }
+        
+            function filterList() {
+                const q = search.value.trim().toLowerCase();
+                let visible = 0;
+                items.forEach(item => {
+                    const match = item.textContent.toLowerCase().includes(q);
+                    item.classList.toggle('d-none', !match);
+                    if (match) visible++;
+                });
+                noResult.classList.toggle('d-none', visible > 0);
+            }
+        
+            checks.forEach(c => c.addEventListener('change', refresh));
+            search.addEventListener('input', filterList);
+        
+            clearBtn.addEventListener('click', () => {
+                checks.forEach(c => c.checked = false);
+                refresh();
+            });
+        
+            // reset search and focus it each time the menu opens
+            group.addEventListener('shown.bs.dropdown', () => {
+                search.value = '';
+                filterList();
+                search.focus();
+            });
+        
+            refresh();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+﻿email_to_chairs.md
+SUBMISSION_CHECKLIST.md
+*.docx
+SENSOR25_Abstract_Submission.pdf
+create_*.py
+UCI*/
+*UCI HAR*
+dataset/
+dataset_outer/
+*.zip
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store

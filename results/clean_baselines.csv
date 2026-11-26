@@ -1,0 +1,10 @@
+Configuration,Model,Macro_F1,Balanced_Accuracy,Channels
+Multimodal (Acc+Gyro),Random Forest,0.8815639379106378,0.8803584961784124,Combined 9-channel
+Multimodal (Acc+Gyro),Logistic Regression,0.896805971476514,0.8961843943460531,Combined 9-channel
+Multimodal (Acc+Gyro),Linear SVM,0.9117097898225871,0.9111740491359344,Combined 9-channel
+Accelerometer-Only,Random Forest,0.8116673782584248,0.809689344397171,6-channel (Body+Total Acc)
+Accelerometer-Only,Logistic Regression,0.8437361825619191,0.8433828310141506,6-channel (Body+Total Acc)
+Accelerometer-Only,Linear SVM,0.8604261635827011,0.8597969075758454,6-channel (Body+Total Acc)
+Gyroscope-Only,Random Forest,0.7916828514865822,0.7937680202295937,3-channel (Body Gyro)
+Gyroscope-Only,Logistic Regression,0.7090366000138074,0.7116194585685035,3-channel (Body Gyro)
+Gyroscope-Only,Linear SVM,0.6992263721925273,0.7022207665246046,3-channel (Body Gyro)
